@@ -17,3 +17,7 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# Explicitly include these directories
+!**/Preview Content/**
+!**/Assets.xcassets/**
