@@ -2,7 +2,10 @@
 
 A simple and elegant iOS tip calculator that helps you calculate tips easily.
 
-<img src="screenshots/demo.png" width="300" alt="Tip Calculator Screenshot">
+<div style="display: flex; justify-content: space-around; gap: 20px;">
+  <img src="screenshots/demo.png" width="280" alt="Tip Calculator Screenshot">
+  <img src="screenshots/history.png" width="280" alt="History View Screenshot">
+</div>
 
 ## Features
 
