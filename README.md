@@ -1,6 +1,6 @@
 # Tip Calculator
 
-A simple and elegant iOS tip calculator that helps you calculate tips and split bills easily.
+A simple and elegant iOS tip calculator that helps you calculate tips easily.
 
 <img src="screenshots/demo.png" width="300" alt="Tip Calculator Screenshot">
 
