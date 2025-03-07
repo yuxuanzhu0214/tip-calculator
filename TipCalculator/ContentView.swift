@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var historyManager = HistoryManager()
+    @State private var showingHistory = false
+    @State private var showingSavedAlert = false
+    
     @State private var isTotalSelected = false {
         didSet {
             calculateAmounts()
@@ -111,9 +115,36 @@ struct ContentView: View {
                     Text("Tip: $\(tip, specifier: "%.2f")")
                     Text("Total: $\(total, specifier: "%.2f")")
                 }
+                
+                // Save Button Section
+                Section {
+                    Button(action: saveCalculation) {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "square.and.arrow.down")
+                            Text("Save")
+                            Spacer()
+                        }
+                    }
+                    .disabled(total == 0)
+                }
             }
-           
             .navigationTitle("Tip Calculator")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingHistory = true
+                    }) {
+                        Image(systemName: "clock.arrow.circlepath")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingHistory) {
+                HistoryView(historyManager: historyManager)
+            }
+            .alert("Saved!", isPresented: $showingSavedAlert) {
+                Button("OK", role: .cancel) { }
+            }
         }
     }
 
@@ -155,5 +186,21 @@ struct ContentView: View {
             // Final total includes both tax and tip
             total = totalBeforeTip + tip
         }
+    }
+    
+    private func saveCalculation() {
+        let currentTaxRate = Double(taxRate) ?? 0.0
+        historyManager.addRecord(
+            subtotal: subtotal,
+            tax: tax,
+            totalBeforeTip: totalBeforeTip,
+            tip: tip,
+            total: total,
+            tipPercentage: tipPercentage,
+            taxRate: currentTaxRate
+        )
+        
+        // Show saved alert
+        showingSavedAlert = true
     }
 }
